@@ -1,6 +1,5 @@
-package com.example.foodify.volley
+package com.example.foodify
 
-import android.app.DownloadManager
 import android.content.Context
 import com.android.volley.Request
 import com.android.volley.Response
@@ -12,22 +11,18 @@ import java.lang.Exception
 class VolleyRequest {
     lateinit var listener: VolleyRequestListener
 
-    fun VolleyRequest() {
-
-    }
-
     interface VolleyRequestListener {
-        public fun onDataLoaded(jsonObject: JSONObject)
-        public fun onError()
+        fun onDataLoaded(jsonObject: JSONObject)
+        fun onError()
     }
 
 
 
-    public fun setVolleyRequestlistener(listener: VolleyRequestListener) {
+    fun setVolleyRequestlistener(listener: VolleyRequestListener) {
         this.listener = listener
     }
 
-    public fun makeGetRequest(url: String, parameter: Map<String, String>, context: Context) {
+    fun makeGetRequest(url: String, parameter: Map<String, String>, context: Context) {
         val queue = Volley.newRequestQueue(context)
         val jsonObjectRequest = object:JsonObjectRequest(Request.Method.GET, url, null, Response.Listener {
             try {
@@ -47,16 +42,16 @@ class VolleyRequest {
         }
         queue.add(jsonObjectRequest)
     }
-    public fun makePostRequest(url: String, jsonObject: JSONObject, context: Context) {
+    fun makePostRequest(url: String, jsonObject: JSONObject, context: Context) {
         val queue = Volley.newRequestQueue(context)
         val jsonObjectRequest = object:JsonObjectRequest(Method.POST, url, jsonObject, Response.Listener {
             try {
-                listener.onError()
+                listener.onDataLoaded(it)
             } catch (e: Exception) {
 
             }
         }, Response.ErrorListener {
-
+            listener.onError()
         }) {
             override fun getHeaders(): MutableMap<String, String> {
                 val header = HashMap<String, String>()

@@ -2,16 +2,15 @@ package com.example.foodify.signin
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
-import androidx.core.app.ActivityCompat.finishAffinity
-import com.android.volley.toolbox.JsonObjectRequest
+import android.widget.Toast
 import com.example.foodify.R
+import com.example.foodify.VolleyRequest
 import com.example.foodify.utilities.ApiUrl
-import com.example.foodify.volley.VolleyRequest
-import com.example.foodify.volley.VolleyRequest.VolleyRequestListener
+
 import org.json.JSONObject
 
 class SignInActivity : AppCompatActivity() {
@@ -50,13 +49,14 @@ class SignInActivity : AppCompatActivity() {
     private fun initListeners() {
         loginBtn.setOnClickListener {
             if (checkRequiredFields()) run {
-                val jsonObject = JSONObject()
-                jsonObject.put("mobile_number", mobileNumberEt.text)
-                jsonObject.put("password", passwordEt.text)
-                volleyRequest.makePostRequest(ApiUrl().LOGIN, jsonObject, this)
-                volleyRequest.setVolleyRequestlistener(object : VolleyRequestListener {
+                val loginJsonObject = JSONObject()
+                loginJsonObject.put("mobile_number", mobileNumberEt.text.toString())
+                loginJsonObject.put("password", passwordEt.text.toString())
+                Log.e("here", loginJsonObject.toString())
+                volleyRequest.makePostRequest(ApiUrl().LOGIN, loginJsonObject, this)
+                volleyRequest.setVolleyRequestlistener(object: VolleyRequest.VolleyRequestListener{
                     override fun onDataLoaded(jsonObject: JSONObject) {
-                        TODO("Not yet implemented")
+                        Log.e("here==", jsonObject.toString())
                     }
 
                     override fun onError() {
@@ -64,19 +64,37 @@ class SignInActivity : AppCompatActivity() {
                     }
 
                 })
-
             }
         }
     }
 
     private fun checkRequiredFields(): Boolean {
-
-
-
-        return false
+        var result = true
+        if (mobileNumberEt.text.toString() == "" && passwordEt.text.toString() == "") {
+            makeToast("Mobile number and password must not be empty.")
+            result = false
+        } else if (mobileNumberEt.text.toString() == "") {
+            makeToast("Mobile number is required.")
+            result = false
+        } else if (passwordEt.text.toString() == "") {
+            makeToast("Password is required.")
+            result = false
+        } else if (mobileNumberEt.text.toString().length < 10) {
+            mobileNumberEt.error = "Enter a valid mobile number"
+        } else if (passwordEt.text.toString().length < 4) {
+            passwordEt.error = "Enter a valid password"
+        }
+        return result
     }
 
     override fun onBackPressed() {
         finishAffinity()
+    }
+    fun makeToast(str: String) {
+        Toast.makeText(
+            this,
+            str,
+            Toast.LENGTH_SHORT
+        ).show()
     }
 }
