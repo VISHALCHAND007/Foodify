@@ -1,17 +1,25 @@
 package com.example.foodify.signin
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.telecom.PhoneAccount.builder
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import com.android.volley.VolleyError
+import com.example.foodify.MainActivity
 import com.example.foodify.R
 import com.example.foodify.VolleyRequest
+import com.example.foodify.signup.SignUpActivity
 import com.example.foodify.utilities.ApiUrl
+import com.google.android.material.shape.ShapeAppearanceModel.builder
 
 import org.json.JSONObject
+import java.util.stream.DoubleStream.builder
 
 class SignInActivity : AppCompatActivity() {
     private lateinit var mobileNumberEt: EditText
@@ -52,20 +60,54 @@ class SignInActivity : AppCompatActivity() {
                 val loginJsonObject = JSONObject()
                 loginJsonObject.put("mobile_number", mobileNumberEt.text.toString())
                 loginJsonObject.put("password", passwordEt.text.toString())
-                Log.e("here", loginJsonObject.toString())
                 volleyRequest.makePostRequest(ApiUrl().LOGIN, loginJsonObject, this)
-                volleyRequest.setVolleyRequestlistener(object: VolleyRequest.VolleyRequestListener{
+                volleyRequest.setVolleyRequestlistener(object :
+                    VolleyRequest.VolleyRequestListener {
                     override fun onDataLoaded(jsonObject: JSONObject) {
-                        Log.e("here==", jsonObject.toString())
+                        if (jsonObject.has("data")) {
+                            val data = jsonObject.getJSONObject("data")
+                            if (data.has("success")) {
+                                if (data.getBoolean("success")) {
+                                    //go to home
+                                    val intent =
+                                        Intent(this@SignInActivity, MainActivity::class.java)
+                                    startActivity(intent)
+                                } else if (data.has("errorMessage") && data.getString("errorMessage")
+                                        .contains("Incorrect")
+                                ) {
+                                    //show toast of incorrect password
+                                    makeToast("Incorrect .")
+                                } else if (data.has("errorMessage") && data.getString("errorMessage")
+                                        .contains("not registered")
+                                ) {
+                                    showDialog()
+                                }
+                            }
+                        }
                     }
 
-                    override fun onError() {
-                        TODO("Not yet implemented")
+                    override fun onError(volleyError: VolleyError) {
+                        makeToast(volleyError.message.toString())
                     }
-
                 })
             }
         }
+    }
+
+    private fun showDialog() {
+        val alertDialog = AlertDialog.Builder(this@SignInActivity)
+        alertDialog.setCancelable(true)
+        alertDialog.setMessage("It looks like you don't have an account. Sign up?")
+        alertDialog.setTitle("Not registered")
+        alertDialog.setPositiveButton("Yes") { text, listener ->
+            //user not registered, navigate the screen to sign up page
+            val intent = Intent(this@SignInActivity, SignUpActivity::class.java)
+            startActivity(intent)
+        }
+        alertDialog.setNegativeButton("No") { text, listener ->
+
+        }
+        alertDialog.show()
     }
 
     private fun checkRequiredFields(): Boolean {
@@ -90,6 +132,7 @@ class SignInActivity : AppCompatActivity() {
     override fun onBackPressed() {
         finishAffinity()
     }
+
     fun makeToast(str: String) {
         Toast.makeText(
             this,

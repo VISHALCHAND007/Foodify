@@ -3,6 +3,7 @@ package com.example.foodify
 import android.content.Context
 import com.android.volley.Request
 import com.android.volley.Response
+import com.android.volley.VolleyError
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import org.json.JSONObject
@@ -13,10 +14,8 @@ class VolleyRequest {
 
     interface VolleyRequestListener {
         fun onDataLoaded(jsonObject: JSONObject)
-        fun onError()
+        fun onError(volleyError: VolleyError)
     }
-
-
 
     fun setVolleyRequestlistener(listener: VolleyRequestListener) {
         this.listener = listener
@@ -51,7 +50,7 @@ class VolleyRequest {
 
             }
         }, Response.ErrorListener {
-            listener.onError()
+            listener.onError(it)
         }) {
             override fun getHeaders(): MutableMap<String, String> {
                 val header = HashMap<String, String>()
@@ -60,5 +59,6 @@ class VolleyRequest {
                 return header
             }
         }
+        queue.add(jsonObjectRequest)
     }
 }
