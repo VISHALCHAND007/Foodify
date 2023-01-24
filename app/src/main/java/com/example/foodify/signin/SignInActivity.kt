@@ -14,6 +14,7 @@ import com.android.volley.VolleyError
 import com.example.foodify.MainActivity
 import com.example.foodify.R
 import com.example.foodify.VolleyRequest
+import com.example.foodify.forgotPassword.ForgotPasswordActivity
 import com.example.foodify.signup.SignUpActivity
 import com.example.foodify.utilities.ApiUrl
 import com.google.android.material.shape.ShapeAppearanceModel.builder
@@ -91,6 +92,14 @@ class SignInActivity : AppCompatActivity() {
                     }
                 })
             }
+        }
+        forgotPasswordTv.setOnClickListener {
+            val intent = Intent(this@SignInActivity, ForgotPasswordActivity::class.java)
+            startActivity(intent)
+        }
+        signUpTv.setOnClickListener {
+            val intent = Intent(this@SignInActivity, SignUpActivity::class.java)
+            startActivity(intent)
         }
     }
 
