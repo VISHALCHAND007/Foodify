@@ -16,6 +16,12 @@
         android:theme="@style/Theme.Foodify"
         tools:targetApi="31">
         <activity
+            android:name=".MainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".resetPasswod.ResetPasswordActivity"
+            android:exported="false" />
+        <activity
             android:name=".forgotPassword.ForgotPasswordActivity"
             android:exported="false" />
         <activity
@@ -33,9 +39,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".MainActivity"
-            android:exported="false" />
     </application>
 
 </manifest>

@@ -1,15 +1,14 @@
 package com.example.foodify.signin
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.telecom.PhoneAccount.builder
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.VolleyError
 import com.example.foodify.MainActivity
 import com.example.foodify.R
@@ -17,10 +16,7 @@ import com.example.foodify.VolleyRequest
 import com.example.foodify.forgotPassword.ForgotPasswordActivity
 import com.example.foodify.signup.SignUpActivity
 import com.example.foodify.utilities.ApiUrl
-import com.google.android.material.shape.ShapeAppearanceModel.builder
-
 import org.json.JSONObject
-import java.util.stream.DoubleStream.builder
 
 class SignInActivity : AppCompatActivity() {
     private lateinit var mobileNumberEt: EditText
@@ -65,19 +61,18 @@ class SignInActivity : AppCompatActivity() {
                 volleyRequest.setVolleyRequestlistener(object :
                     VolleyRequest.VolleyRequestListener {
                     override fun onDataLoaded(jsonObject: JSONObject) {
+                        Log.e("here", jsonObject.toString())
                         if (jsonObject.has("data")) {
                             val data = jsonObject.getJSONObject("data")
                             if (data.has("success")) {
                                 if (data.getBoolean("success")) {
                                     //go to home
-                                    val intent =
-                                        Intent(this@SignInActivity, MainActivity::class.java)
-                                    startActivity(intent)
+                                   goToHome(jsonObject)
                                 } else if (data.has("errorMessage") && data.getString("errorMessage")
                                         .contains("Incorrect")
                                 ) {
                                     //show toast of incorrect password
-                                    makeToast("Incorrect .")
+                                    makeToast("Incorrect Password.")
                                 } else if (data.has("errorMessage") && data.getString("errorMessage")
                                         .contains("not registered")
                                 ) {
@@ -108,12 +103,12 @@ class SignInActivity : AppCompatActivity() {
         alertDialog.setCancelable(true)
         alertDialog.setMessage("It looks like you don't have an account. Sign up?")
         alertDialog.setTitle("Not registered")
-        alertDialog.setPositiveButton("Yes") { text, listener ->
+        alertDialog.setPositiveButton("Yes") { _, _ ->
             //user not registered, navigate the screen to sign up page
             val intent = Intent(this@SignInActivity, SignUpActivity::class.java)
             startActivity(intent)
         }
-        alertDialog.setNegativeButton("No") { text, listener ->
+        alertDialog.setNegativeButton("No") { _, _ ->
 
         }
         alertDialog.show()
@@ -148,5 +143,15 @@ class SignInActivity : AppCompatActivity() {
             str,
             Toast.LENGTH_SHORT
         ).show()
+    }
+    private fun goToHome(jsonObject: JSONObject) {
+        var dataJSONObject = JSONObject()
+        dataJSONObject = jsonObject.getJSONObject("data")
+        val intent = Intent(this@SignInActivity, MainActivity::class.java)
+        intent.putExtra("name", dataJSONObject.getString("name"))
+        intent.putExtra("email", dataJSONObject.getString("email"))
+        intent.putExtra("mobile", dataJSONObject.getString("mobile_number"))
+        intent.putExtra("address", dataJSONObject.getString("address"))
+        startActivity(intent)
     }
 }
