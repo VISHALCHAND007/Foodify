@@ -2,7 +2,6 @@ package com.example.foodify.signin
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -10,10 +9,10 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.VolleyError
-import com.example.foodify.MainActivity
 import com.example.foodify.R
 import com.example.foodify.VolleyRequest
 import com.example.foodify.forgotPassword.ForgotPasswordActivity
+import com.example.foodify.homeActivity.MainActivity
 import com.example.foodify.signup.SignUpActivity
 import com.example.foodify.utilities.ApiUrl
 import org.json.JSONObject
@@ -61,7 +60,6 @@ class SignInActivity : AppCompatActivity() {
                 volleyRequest.setVolleyRequestlistener(object :
                     VolleyRequest.VolleyRequestListener {
                     override fun onDataLoaded(jsonObject: JSONObject) {
-                        Log.e("here", jsonObject.toString())
                         if (jsonObject.has("data")) {
                             val data = jsonObject.getJSONObject("data")
                             if (data.has("success")) {
@@ -145,8 +143,7 @@ class SignInActivity : AppCompatActivity() {
         ).show()
     }
     private fun goToHome(jsonObject: JSONObject) {
-        var dataJSONObject = JSONObject()
-        dataJSONObject = jsonObject.getJSONObject("data")
+        val dataJSONObject: JSONObject = jsonObject.getJSONObject("data").getJSONObject("data")
         val intent = Intent(this@SignInActivity, MainActivity::class.java)
         intent.putExtra("name", dataJSONObject.getString("name"))
         intent.putExtra("email", dataJSONObject.getString("email"))

@@ -7,9 +7,9 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import com.android.volley.VolleyError
-import com.example.foodify.MainActivity
 import com.example.foodify.R
 import com.example.foodify.VolleyRequest
+import com.example.foodify.homeActivity.MainActivity
 import com.example.foodify.utilities.ApiUrl
 import org.json.JSONObject
 

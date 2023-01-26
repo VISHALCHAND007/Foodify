@@ -71,7 +71,7 @@
             android:layout_gravity="center_vertical"
             android:hint="@string/password"
             android:background="@null"
-            android:inputType="number"
+            android:inputType="textPassword"
             android:textSize="18sp"
             tools:ignore="TextViewEdits"
             android:autofillHints="" />
