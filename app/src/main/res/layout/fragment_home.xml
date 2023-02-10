@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context=".Fragments.HomeFragment">
+
+   <androidx.cardview.widget.CardView
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:backgroundTint="@color/colorAccent"
+       app:cardElevation="0dp">
+
+       <androidx.cardview.widget.CardView
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           app:cardCornerRadius="15dp"
+           android:layout_margin="10dp"
+           app:cardElevation="0dp">
+
+           <LinearLayout
+               android:id="@+id/searchLL"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:padding="8dp"
+               android:orientation="horizontal"
+               android:layout_marginHorizontal="10dp"
+               android:layout_marginVertical="5dp"
+               android:gravity="center_vertical">
+
+               <ImageView
+                   android:layout_width="25dp"
+                   android:layout_height="25dp"
+                   android:src="@drawable/search"
+                   android:contentDescription="@null"
+                   app:tint="@color/grey" />
+
+               <EditText
+                   android:layout_width="0dp"
+                   android:layout_height="wrap_content"
+                   android:hint="@string/search_restaurants"
+                   android:textColor="@color/grey"
+                   android:layout_marginStart="10dp"
+                   android:background="@null"
+                   android:layout_weight="1"
+                   android:autofillHints=""
+                   android:inputType="text" />
+
+           </LinearLayout>
+
+       </androidx.cardview.widget.CardView>
+
+   </androidx.cardview.widget.CardView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/restaurantRv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </RelativeLayout>
+
+</LinearLayout>

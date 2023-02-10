@@ -17,4 +17,20 @@
     <string name="register">Register</string>
     <string name="mobile_number">Mobile Number</string>
     <string name="delivery_address">Delivery Address</string>
+    <string name="user_name">Username</string>
+    <string name="_91_80772332390">+91 80772332390</string>
+    <string name="home">Home</string>
+    <string name="my_profile">My Profile</string>
+    <string name="favourite_restaurants">Favourite Restaurants</string>
+    <string name="order_history">Order History</string>
+    <string name="faq_s">FAQ\'s</string>
+    <string name="logout">Logout</string>
+    <string name="open_drawer">Open Drawer</string>
+    <string name="close_drawer">Close Drawer</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="search_restaurants">Search Restaurants</string>
+    <string name="pind_tadka">Pind tadka</string>
+    <string name="_280_person">280/person</string>
+    <string name="_4_1">4.1</string>
 </resources>
