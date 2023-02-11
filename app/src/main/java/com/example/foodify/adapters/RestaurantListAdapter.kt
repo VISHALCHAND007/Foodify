@@ -1,16 +1,19 @@
 package com.example.foodify.adapters
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.foodify.R
+import com.example.foodify.model.RestaurantListModel
 import java.util.ArrayList
 
-class RestaurantListAdapter(val mList: ArrayList<String>?, val mContext: Context) :
+class RestaurantListAdapter(val mList: ArrayList<RestaurantListModel>?, val mContext: Context) :
     RecyclerView.Adapter<RestaurantListAdapter.RestaurantViewHolder>() {
 
 
@@ -36,11 +39,17 @@ class RestaurantListAdapter(val mList: ArrayList<String>?, val mContext: Context
         holder: RestaurantListAdapter.RestaurantViewHolder,
         position: Int
     ) {
-
+        val restaurant = mList?.get(position)
+        if (restaurant != null) {
+            holder.restaurantName.text = restaurant.restaurantName
+            Glide.with(mContext).load(restaurant.restaurantImg).error(R.drawable.chef).into(holder.restaturantImg)
+            val cost = restaurant.costForOne + "/person"
+            holder.restaurantPerPersonCost.text = cost
+            holder.ratingTv.text = restaurant.restaurantRating
+        }
     }
 
     override fun getItemCount(): Int {
-//        return mList.size
-        return 10
+        return mList!!.size
     }
 }

@@ -21,7 +21,7 @@ class VolleyRequest {
         this.listener = listener
     }
 
-    fun makeGetRequest(url: String, parameter: Map<String, String>, context: Context) {
+    fun makeGetRequest(url: String, parameter: Map<String, String>?, context: Context) {
         val queue = Volley.newRequestQueue(context)
         val jsonObjectRequest = object:JsonObjectRequest(Request.Method.GET, url, null, Response.Listener {
             try {

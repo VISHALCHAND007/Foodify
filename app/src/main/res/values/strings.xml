@@ -33,4 +33,5 @@
     <string name="pind_tadka">Pind tadka</string>
     <string name="_280_person">280/person</string>
     <string name="_4_1">4.1</string>
+    <string name="error_msg">Some error occurred</string>
 </resources>
