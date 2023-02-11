@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -29,6 +30,7 @@ class HomeFragment : Fragment() {
     private lateinit var restaurantListAdapter: RestaurantListAdapter
     private lateinit var restaurantList: java.util.ArrayList<RestaurantListModel>
     private lateinit var volleyRequest: VolleyRequest
+    private lateinit var progressRl: RelativeLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,6 +63,7 @@ class HomeFragment : Fragment() {
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         restaurantList = arrayListOf()
         volleyRequest = VolleyRequest()
+        progressRl = view.findViewById(R.id.progressRl)
     }
 
     private fun initTasks() {
@@ -72,9 +75,10 @@ class HomeFragment : Fragment() {
             override fun onDataLoaded(jsonObject: JSONObject) {
                 if (jsonObject.has("data")) {
                     val dataObj = jsonObject.getJSONObject("data")
-                    if(dataObj.has("success")) {
+                    if (dataObj.has("success")) {
                         val success = dataObj.getBoolean("success")
                         if (success) {
+                            progressRl.visibility = View.GONE
                             val jsonArray = dataObj.getJSONArray("data")
                             for (i in 0 until jsonArray.length()) {
                                 val restaurantObj = jsonArray.getJSONObject(i)
@@ -93,7 +97,6 @@ class HomeFragment : Fragment() {
                                 .show()
                         }
                     }
-
                 }
             }
 
