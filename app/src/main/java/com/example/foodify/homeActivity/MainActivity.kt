@@ -12,10 +12,13 @@ import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
+import androidx.core.app.ActivityCompat.finishAffinity
+import androidx.core.content.ContextCompat.startActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.example.foodify.fragments.HomeFragment
 import com.example.foodify.R
+import com.example.foodify.fragments.FAQFragment
 import com.example.foodify.signin.SignInActivity
 import com.example.foodify.utils.Constants
 import com.example.foodify.utils.SharedPreferencesHelper
@@ -67,12 +70,31 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun saveIntentValues() {
-        val needToSave = SharedPreferencesHelper().getBooleanInPreferences(Constants().SAVE_DATA, this@MainActivity)
-        if(needToSave) {
-            SharedPreferencesHelper().setVariableInPreferences(Constants().USER_NAME, userName, this@MainActivity)
-            SharedPreferencesHelper().setVariableInPreferences(Constants().USER_EMAIL, userEmail, this@MainActivity)
-            SharedPreferencesHelper().setVariableInPreferences(Constants().USER_NUMBER, mobileNumber, this@MainActivity)
-            SharedPreferencesHelper().setBooleanInPreferences(Constants().SAVE_DATA, false, this@MainActivity)
+        val needToSave = SharedPreferencesHelper().getBooleanInPreferences(
+            Constants().SAVE_DATA,
+            this@MainActivity
+        )
+        if (needToSave) {
+            SharedPreferencesHelper().setVariableInPreferences(
+                Constants().USER_NAME,
+                userName,
+                this@MainActivity
+            )
+            SharedPreferencesHelper().setVariableInPreferences(
+                Constants().USER_EMAIL,
+                userEmail,
+                this@MainActivity
+            )
+            SharedPreferencesHelper().setVariableInPreferences(
+                Constants().USER_NUMBER,
+                mobileNumber,
+                this@MainActivity
+            )
+            SharedPreferencesHelper().setBooleanInPreferences(
+                Constants().SAVE_DATA,
+                false,
+                this@MainActivity
+            )
         }
 
     }
@@ -86,8 +108,14 @@ class MainActivity : AppCompatActivity() {
         addHamburgerIcon()
 
         //adding the user data on navigation View
-        userNameTv.text = SharedPreferencesHelper().getVariableInPreferences(Constants().USER_NAME, this@MainActivity)
-        val number = SharedPreferencesHelper().getVariableInPreferences(Constants().USER_NUMBER, this@MainActivity)
+        userNameTv.text = SharedPreferencesHelper().getVariableInPreferences(
+            Constants().USER_NAME,
+            this@MainActivity
+        )
+        val number = SharedPreferencesHelper().getVariableInPreferences(
+            Constants().USER_NUMBER,
+            this@MainActivity
+        )
         userNumberTv.text = "+91 $number"
     }
 
@@ -107,10 +135,9 @@ class MainActivity : AppCompatActivity() {
     private fun initListeners() {
 
         navigationView.setNavigationItemSelectedListener {
-            when(it.itemId) {
+            when (it.itemId) {
                 R.id.home -> {
                     openHomeFragment()
-                    drawerLayout.closeDrawer(GravityCompat.START)
                 }
                 R.id.profile -> {
 
@@ -122,23 +149,58 @@ class MainActivity : AppCompatActivity() {
 
                 }
                 R.id.faq -> {
-
+                    toolBar.title = resources.getString(R.string.faq_title)
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.frameLayout, FAQFragment()).commit()
                 }
                 R.id.logout -> {
-                    clearPreferencesAndNavigateToLoginScreen()
+                    popupDialog()
                 }
             }
-
+            drawerLayout.closeDrawer(GravityCompat.START)
             return@setNavigationItemSelectedListener true
         }
     }
 
+    private fun popupDialog() {
+        val dialog = AlertDialog.Builder(this@MainActivity)
+        dialog.setTitle("Confirmation")
+        dialog.setMessage("Are you sure you want to logout?")
+        dialog.setPositiveButton("Yes") { _: DialogInterface, _: Int ->
+            clearPreferencesAndNavigateToLoginScreen()
+        }
+        dialog.setNegativeButton("No") { _: DialogInterface, _: Int ->
+
+        }
+        dialog.show()
+    }
+
     private fun clearPreferencesAndNavigateToLoginScreen() {
-        SharedPreferencesHelper().setVariableInPreferences(Constants().USER_NAME, "",this@MainActivity)
-        SharedPreferencesHelper().setVariableInPreferences(Constants().USER_EMAIL, "",this@MainActivity)
-        SharedPreferencesHelper().setVariableInPreferences(Constants().USER_NUMBER, "",this@MainActivity)
-        SharedPreferencesHelper().setVariableInPreferences(Constants().DELIVERY_ADDRESS, "",this@MainActivity)
-        SharedPreferencesHelper().setBooleanInPreferences(Constants().IS_LOGGED_IN, false,this@MainActivity)
+        SharedPreferencesHelper().setVariableInPreferences(
+            Constants().USER_NAME,
+            "",
+            this@MainActivity
+        )
+        SharedPreferencesHelper().setVariableInPreferences(
+            Constants().USER_EMAIL,
+            "",
+            this@MainActivity
+        )
+        SharedPreferencesHelper().setVariableInPreferences(
+            Constants().USER_NUMBER,
+            "",
+            this@MainActivity
+        )
+        SharedPreferencesHelper().setVariableInPreferences(
+            Constants().DELIVERY_ADDRESS,
+            "",
+            this@MainActivity
+        )
+        SharedPreferencesHelper().setBooleanInPreferences(
+            Constants().IS_LOGGED_IN,
+            false,
+            this@MainActivity
+        )
 
         //setting intent
         val intent = Intent(this@MainActivity, SignInActivity::class.java)
@@ -154,7 +216,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id = item.itemId
-        if(id == android.R.id.home) {
+        if (id == android.R.id.home) {
             drawerLayout.openDrawer(GravityCompat.START)
         }
 
@@ -170,7 +232,7 @@ class MainActivity : AppCompatActivity() {
         dialog.setPositiveButton("Yes") { _: DialogInterface, _: Int ->
             finishAffinity()
         }
-        dialog.setNegativeButton("No") {_ : DialogInterface, _: Int ->
+        dialog.setNegativeButton("No") { _: DialogInterface, _: Int ->
         }
         dialog.show()
     }
