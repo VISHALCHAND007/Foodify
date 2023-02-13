@@ -116,7 +116,6 @@ class RestaurantMenuActivity : AppCompatActivity() {
     }
 
     private fun setData() {
-        Log.e("here==", menuList.size.toString())
         menuListAdapter = MenuListAdapter(this@RestaurantMenuActivity, menuList)
         menuRv.layoutManager = linearLayoutManager
         menuRv.adapter = menuListAdapter

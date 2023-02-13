@@ -60,7 +60,6 @@ class ForgotPasswordActivity : AppCompatActivity() {
                 volleyRequestForgotPassword.setVolleyRequestlistener(object :
                     VolleyRequest.VolleyRequestListener {
                     override fun onDataLoaded(jsonObject: JSONObject) {
-                        Log.e("here", jsonObject.toString())
                         if (jsonObject.has("success") && jsonObject.getBoolean("success")) {
                             val intent = Intent(
                                 this@ForgotPasswordActivity,

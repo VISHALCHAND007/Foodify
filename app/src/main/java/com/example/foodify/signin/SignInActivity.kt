@@ -1,6 +1,7 @@
 package com.example.foodify.signin
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
@@ -15,6 +16,8 @@ import com.example.foodify.forgotPassword.ForgotPasswordActivity
 import com.example.foodify.homeActivity.MainActivity
 import com.example.foodify.signup.SignUpActivity
 import com.example.foodify.utilities.ApiUrl
+import com.example.foodify.utils.Constants
+import com.example.foodify.utils.SharedPreferencesHelper
 import org.json.JSONObject
 
 class SignInActivity : AppCompatActivity() {
@@ -143,6 +146,10 @@ class SignInActivity : AppCompatActivity() {
         ).show()
     }
     private fun goToHome(jsonObject: JSONObject) {
+        //set preference value
+        SharedPreferencesHelper().setBooleanInPreferences(Constants().IS_LOGGED_IN, true, this@SignInActivity)
+        SharedPreferencesHelper().setBooleanInPreferences(Constants().SAVE_DATA, true, this@SignInActivity)
+
         val dataJSONObject: JSONObject = jsonObject.getJSONObject("data").getJSONObject("data")
         val intent = Intent(this@SignInActivity, MainActivity::class.java)
         intent.putExtra("name", dataJSONObject.getString("name"))

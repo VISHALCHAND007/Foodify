@@ -8,6 +8,7 @@
     android:orientation="vertical">
 
     <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/userImg"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:src="@drawable/default_pic"
@@ -15,6 +16,7 @@
         app:civ_border_color="@color/black"/>
 
     <TextView
+        android:id="@+id/userNameProfile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/user_name"
@@ -24,6 +26,7 @@
         android:layout_marginTop="@dimen/content_spacing1"/>
 
     <TextView
+        android:id="@+id/userNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/_91_80772332390"
