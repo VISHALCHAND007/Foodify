@@ -55,9 +55,14 @@ dependencies {
     //room database
     dependencies {
         // Room for simple persistence with an ORM
-        def roomVersion = "2.2.2"
-        //noinspection GradleDependency
-        implementation "androidx.room:room-runtime:$roomVersion"
-        kapt "androidx.room:room-compiler:$roomVersion"
+        ext {
+            roomVersion = "2.1.0"
+        }
+
+        dependencies {
+            // Room for simple persistence with an ORM
+            implementation "androidx.room:room-runtime:$roomVersion"
+            kapt "androidx.room:room-compiler:$roomVersion"
+        }
     }
 }

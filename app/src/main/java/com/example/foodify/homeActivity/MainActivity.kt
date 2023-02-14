@@ -22,6 +22,7 @@ import com.bumptech.glide.Glide
 import com.example.foodify.fragments.HomeFragment
 import com.example.foodify.R
 import com.example.foodify.fragments.FAQFragment
+import com.example.foodify.fragments.FavouriteFragment
 import com.example.foodify.fragments.ProfileFragment
 import com.example.foodify.signin.SignInActivity
 import com.example.foodify.utils.Constants
@@ -164,7 +165,8 @@ class MainActivity : AppCompatActivity() {
                     setUpPage(title, ProfileFragment())
                 }
                 R.id.favourite_restaurant -> {
-
+                    title = "Favourite Restaurants"
+                    setUpPage(title, FavouriteFragment())
                 }
                 R.id.order_history -> {
 
@@ -253,6 +255,7 @@ class MainActivity : AppCompatActivity() {
 
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
+        drawerLayout.closeDrawer(GravityCompat.START)
         if (selectedFragment == R.id.home || selectedFragment == 0) {
             val dialog = AlertDialog.Builder(this@MainActivity)
             dialog.setTitle("Confirm")
