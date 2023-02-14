@@ -41,4 +41,7 @@
     <string name="proceed_to_cart">Proceed to Cart</string>
     <string name="preferences_file_name">User Preferences</string>
     <string name="faq_title">Frequently Asked Questions</string>
+    <string name="your_previous_orders_are_listed_below">Your previous orders are listed below:</string>
+    <string name="my_cart">My Cart</string>
+    <string name="ordering_from">Ordering From:</string>
 </resources>

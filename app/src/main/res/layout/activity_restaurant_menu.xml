@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/background_color"
     tools:context=".restaurantMenu.RestaurantMenuActivity">
 
     <androidx.appcompat.widget.Toolbar
@@ -83,9 +82,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/content_spacing3"
-                android:layout_marginTop="@dimen/content_spacing3"
-                android:backgroundTint="@color/colorAccent"
-                android:paddingVertical="15dp"
+                android:visibility="gone"
+                android:layout_marginVertical="@dimen/content_spacing3"
+                android:background="@drawable/button_round_corners"
+                android:paddingVertical="20dp"
                 android:text="@string/proceed_to_cart"
                 android:textAllCaps="false"
                 android:textColor="@color/white" />

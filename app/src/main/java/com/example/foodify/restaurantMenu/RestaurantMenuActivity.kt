@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import android.widget.Button
 import android.widget.RelativeLayout
 import android.widget.ScrollView
 import android.widget.Toast
@@ -29,6 +30,7 @@ class RestaurantMenuActivity : AppCompatActivity() {
     private lateinit var menuListAdapter: MenuListAdapter
     private lateinit var scrollView: ScrollView
     private lateinit var progressRl: RelativeLayout
+    private lateinit var proceedToCartBtn: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,6 +59,7 @@ class RestaurantMenuActivity : AppCompatActivity() {
         menuList = arrayListOf()
         scrollView = findViewById(R.id.scrollView)
         progressRl = findViewById(R.id.progressRl)
+        proceedToCartBtn = findViewById(R.id.proceedToCart)
     }
 
     private fun initTasks() {
@@ -114,7 +117,7 @@ class RestaurantMenuActivity : AppCompatActivity() {
     }
 
     private fun setData() {
-        menuListAdapter = MenuListAdapter(this@RestaurantMenuActivity, menuList)
+        menuListAdapter = MenuListAdapter(this@RestaurantMenuActivity, menuList, proceedToCartBtn, restaurantName)
         menuRv.layoutManager = linearLayoutManager
         menuRv.adapter = menuListAdapter
     }

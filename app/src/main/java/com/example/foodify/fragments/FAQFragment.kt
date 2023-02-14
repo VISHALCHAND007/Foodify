@@ -87,7 +87,7 @@ class FAQFragment : Fragment() {
         Handler(Looper.myLooper()!!).postDelayed({
             progressLayout.visibility = View.GONE
             setData()
-        }, 1000)
+        }, 500)
     }
 
     private fun initListeners() {
