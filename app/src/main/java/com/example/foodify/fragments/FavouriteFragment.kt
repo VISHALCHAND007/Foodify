@@ -1,25 +1,25 @@
 package com.example.foodify.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide.init
 import com.example.foodify.R
-import com.example.foodify.adapters.RestaurantListAdapter
+import com.example.foodify.adapters.FavouriteRestaurantAdapter
 import com.example.foodify.database.Entity
 import com.example.foodify.database.RestaurantDbHelper
-import com.example.foodify.model.RestaurantListModel
+import com.example.foodify.homeActivity.MainActivity
 
 class FavouriteFragment : Fragment() {
     private lateinit var favouriteRecyclerView: RecyclerView
     private lateinit var linearLayoutManager: LinearLayoutManager
-    private lateinit var restaurantListAdapter: RestaurantListAdapter
+    private lateinit var restaurantListAdapter: FavouriteRestaurantAdapter
     private lateinit var restaurantList: List<Entity>
-    val GET_ALL_RESTAURANTS = 4
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +34,7 @@ class FavouriteFragment : Fragment() {
         init(view)
         return view
     }
+
     private fun init(view: View) {
         initElements(view)
         initTasks()
@@ -48,10 +49,14 @@ class FavouriteFragment : Fragment() {
         //get favourite restaurant list
         restaurantList = RestaurantDbHelper.FetchProducts(requireContext()).execute().get()
 
-        if(restaurantList.isNotEmpty()) {
-//            restaurantListAdapter = RestaurantListAdapter(restaurantList, requireContext())
-//            favouriteRecyclerView.layoutManager = linearLayoutManager
-//            favouriteRecyclerView.adapter = restaurantListAdapter
-        }
+        if (restaurantList.isEmpty())
+            fragmentManager?.beginTransaction()?.replace(R.id.frameLayout, HomeFragment())?.commit()
+
+        if (restaurantList.isNotEmpty()) {
+            restaurantListAdapter = FavouriteRestaurantAdapter(requireContext(), restaurantList)
+            favouriteRecyclerView.layoutManager = linearLayoutManager
+            favouriteRecyclerView.adapter = restaurantListAdapter
+        } else
+            Toast.makeText(requireContext(), "No favourite restaurant", Toast.LENGTH_SHORT).show()
     }
 }
