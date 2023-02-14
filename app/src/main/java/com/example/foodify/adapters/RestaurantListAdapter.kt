@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -17,7 +16,6 @@ import com.example.foodify.database.Entity
 import com.example.foodify.database.RestaurantDbHelper
 import com.example.foodify.model.RestaurantListModel
 import com.example.foodify.restaurantMenu.RestaurantMenuActivity
-import kotlinx.coroutines.NonDisposableHandle.parent
 import java.util.ArrayList
 
 class RestaurantListAdapter(

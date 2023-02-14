@@ -1,6 +1,5 @@
 package com.example.foodify.fragments
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -13,7 +12,6 @@ import com.example.foodify.R
 import com.example.foodify.adapters.FavouriteRestaurantAdapter
 import com.example.foodify.database.Entity
 import com.example.foodify.database.RestaurantDbHelper
-import com.example.foodify.homeActivity.MainActivity
 
 class FavouriteFragment : Fragment() {
     private lateinit var favouriteRecyclerView: RecyclerView

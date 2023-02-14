@@ -3,7 +3,6 @@ package com.example.foodify.database
 import android.content.Context
 import android.os.AsyncTask
 import androidx.room.Room
-import com.example.foodify.model.RestaurantListModel
 import com.example.foodify.utils.Constants
 
 class RestaurantDbHelper(private val mContext: Context, private val entity: Entity, private val mode: Int) : AsyncTask<Void, Void, Boolean>() {
