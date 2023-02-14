@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:layout_marginHorizontal="20dp"
     android:orientation="vertical"
+    android:background="@color/background_color"
     tools:context=".fragments.FAQFragment">
 
     <RelativeLayout

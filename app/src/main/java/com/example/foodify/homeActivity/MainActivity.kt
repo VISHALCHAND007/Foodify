@@ -1,24 +1,28 @@
 package com.example.foodify.homeActivity
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
-import androidx.core.app.ActivityCompat.finishAffinity
-import androidx.core.content.ContextCompat.startActivity
+import androidx.core.app.ActivityCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import com.example.foodify.fragments.HomeFragment
 import com.example.foodify.R
 import com.example.foodify.fragments.FAQFragment
+import com.example.foodify.fragments.ProfileFragment
 import com.example.foodify.signin.SignInActivity
 import com.example.foodify.utils.Constants
 import com.example.foodify.utils.SharedPreferencesHelper
@@ -33,8 +37,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navigationView: NavigationView
     private lateinit var userNameTv: TextView
-    private lateinit var userImg: ImageView
+    private lateinit var userImgIv: ImageView
     private lateinit var userNumberTv: TextView
+    private var selectedFragment: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,7 +63,7 @@ class MainActivity : AppCompatActivity() {
         //to access the components of the header inside navigation view
         userNameTv = navigationView.getHeaderView(0).findViewById(R.id.userNameProfile)
         userNumberTv = navigationView.getHeaderView(0).findViewById(R.id.userNumber)
-        userImg = navigationView.getHeaderView(0).findViewById(R.id.userImg)
+        userImgIv = navigationView.getHeaderView(0).findViewById(R.id.userImg)
     }
 
     private fun getIntentValue() {
@@ -90,6 +95,11 @@ class MainActivity : AppCompatActivity() {
                 mobileNumber,
                 this@MainActivity
             )
+            SharedPreferencesHelper().setVariableInPreferences(
+                Constants().DELIVERY_ADDRESS,
+                deliveryAddress,
+                this@MainActivity
+            )
             SharedPreferencesHelper().setBooleanInPreferences(
                 Constants().SAVE_DATA,
                 false,
@@ -117,6 +127,14 @@ class MainActivity : AppCompatActivity() {
             this@MainActivity
         )
         userNumberTv.text = "+91 $number"
+        //getting image
+        val userImg = SharedPreferencesHelper().getVariableInPreferences(
+            Constants().USER_PHOTO,
+            this@MainActivity
+        )
+        if (userImg != " ")
+            Glide.with(this@MainActivity).load(userImg).error(R.drawable.default_pic)
+                .into(userImgIv)
     }
 
     private fun addHamburgerIcon() {
@@ -133,14 +151,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initListeners() {
+        var title: String
 
         navigationView.setNavigationItemSelectedListener {
+            selectedFragment = it.itemId
             when (it.itemId) {
                 R.id.home -> {
                     openHomeFragment()
                 }
                 R.id.profile -> {
-
+                    title = "My Profile"
+                    setUpPage(title, ProfileFragment())
                 }
                 R.id.favourite_restaurant -> {
 
@@ -149,9 +170,8 @@ class MainActivity : AppCompatActivity() {
 
                 }
                 R.id.faq -> {
-                    toolBar.title = resources.getString(R.string.faq_title)
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.frameLayout, FAQFragment()).commit()
+                    title = resources.getString(R.string.faq_title)
+                    setUpPage(title, FAQFragment())
                 }
                 R.id.logout -> {
                     popupDialog()
@@ -162,9 +182,16 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun setUpPage(title: String, fragment: Fragment) {
+        toolBar.title = title
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.frameLayout, fragment)
+            .commit()
+    }
+
     private fun popupDialog() {
         val dialog = AlertDialog.Builder(this@MainActivity)
-        dialog.setTitle("Confirmation")
+        dialog.setTitle("Confirm")
         dialog.setMessage("Are you sure you want to logout?")
         dialog.setPositiveButton("Yes") { _: DialogInterface, _: Int ->
             clearPreferencesAndNavigateToLoginScreen()
@@ -226,14 +253,21 @@ class MainActivity : AppCompatActivity() {
 
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
-        val dialog = AlertDialog.Builder(this@MainActivity)
-        dialog.setMessage("Do you want to exit ?")
-        dialog.setCancelable(false)
-        dialog.setPositiveButton("Yes") { _: DialogInterface, _: Int ->
-            finishAffinity()
+        if (selectedFragment == R.id.home || selectedFragment == 0) {
+            val dialog = AlertDialog.Builder(this@MainActivity)
+            dialog.setTitle("Confirm")
+            dialog.setMessage("Do you want to exit ?")
+            dialog.setCancelable(false)
+            dialog.setPositiveButton("Yes") { _: DialogInterface, _: Int ->
+                finishAffinity()
+            }
+            dialog.setNegativeButton("No") { _: DialogInterface, _: Int ->
+            }
+            dialog.show()
+        } else {
+            selectedFragment = R.id.home
+            supportFragmentManager.beginTransaction().replace(R.id.frameLayout, HomeFragment())
+                .commit()
         }
-        dialog.setNegativeButton("No") { _: DialogInterface, _: Int ->
-        }
-        dialog.show()
     }
 }

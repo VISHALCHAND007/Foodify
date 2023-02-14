@@ -2,10 +2,8 @@ package com.example.foodify.restaurantMenu
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import android.view.View
-import android.widget.HorizontalScrollView
 import android.widget.RelativeLayout
 import android.widget.ScrollView
 import android.widget.Toast
