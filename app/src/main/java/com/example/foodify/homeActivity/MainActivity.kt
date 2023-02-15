@@ -5,6 +5,7 @@ import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.TextView
@@ -33,7 +34,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var userNameTv: TextView
     private lateinit var userImgIv: ImageView
     private lateinit var userNumberTv: TextView
-    private var selectedFragment: Int = 0
+    private var previousMenuItem: MenuItem? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -153,7 +154,13 @@ class MainActivity : AppCompatActivity() {
         var title: String
 
         navigationView.setNavigationItemSelectedListener {
-            selectedFragment = it.itemId
+            if(previousMenuItem != null) {
+                previousMenuItem?.isChecked = false
+            }
+            it.isCheckable = true
+            it.isChecked = true
+            previousMenuItem = it
+
             when (it.itemId) {
                 R.id.home -> {
                     openHomeFragment()
@@ -241,6 +248,7 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction()
             .replace(R.id.frameLayout, HomeFragment())
             .commit()
+        navigationView.setCheckedItem(R.id.home)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -256,21 +264,21 @@ class MainActivity : AppCompatActivity() {
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         drawerLayout.closeDrawer(GravityCompat.START)
-        if (selectedFragment == R.id.home || selectedFragment == 0) {
-            val dialog = AlertDialog.Builder(this@MainActivity)
-            dialog.setTitle("Confirm")
-            dialog.setMessage("Do you want to exit ?")
-            dialog.setCancelable(false)
-            dialog.setPositiveButton("Yes") { _: DialogInterface, _: Int ->
-                finishAffinity()
+        when(supportFragmentManager.findFragmentById(R.id.frameLayout)) {
+            !is HomeFragment -> openHomeFragment()
+
+            else -> {
+                val dialog = AlertDialog.Builder(this@MainActivity)
+                dialog.setTitle("Confirm")
+                dialog.setMessage("Do you want to exit ?")
+                dialog.setCancelable(false)
+                dialog.setPositiveButton("Yes") { _: DialogInterface, _: Int ->
+                    finishAffinity()
+                }
+                dialog.setNegativeButton("No") { _: DialogInterface, _: Int ->
+                }
+                dialog.show()
             }
-            dialog.setNegativeButton("No") { _: DialogInterface, _: Int ->
-            }
-            dialog.show()
-        } else {
-            selectedFragment = R.id.home
-            supportFragmentManager.beginTransaction().replace(R.id.frameLayout, HomeFragment())
-                .commit()
         }
     }
 }
