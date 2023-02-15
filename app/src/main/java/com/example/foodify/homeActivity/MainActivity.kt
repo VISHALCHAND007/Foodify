@@ -15,11 +15,8 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
-import com.example.foodify.fragments.HomeFragment
 import com.example.foodify.R
-import com.example.foodify.fragments.FAQFragment
-import com.example.foodify.fragments.FavouriteFragment
-import com.example.foodify.fragments.ProfileFragment
+import com.example.foodify.fragments.*
 import com.example.foodify.signin.SignInActivity
 import com.example.foodify.utils.Constants
 import com.example.foodify.utils.SharedPreferencesHelper
@@ -170,7 +167,8 @@ class MainActivity : AppCompatActivity() {
                     setUpPage(title, FavouriteFragment())
                 }
                 R.id.order_history -> {
-
+                    title = "My Previous Orders"
+                    setUpPage(title, OrderHistoryFragment())
                 }
                 R.id.faq -> {
                     title = resources.getString(R.string.faq_title)

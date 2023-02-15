@@ -10,6 +10,7 @@
 
     <RelativeLayout
         android:id="@+id/progressLayout"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -17,7 +18,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_centerInParent="true"
-            android:indeterminateTint="@color/colorAccent"/>
+            android:indeterminateTint="@color/colorAccent" />
 
     </RelativeLayout>
 
@@ -33,6 +34,16 @@
         android:layout_height="1dp"
         android:layout_marginTop="@dimen/content_spacing1"
         android:background="@color/grey_line" />
+
+    <TextView
+        android:id="@+id/noOrdersFoundTv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/no_orders_found"
+        android:visibility="gone"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="18sp"/>
 
     <RelativeLayout
         android:layout_width="match_parent"

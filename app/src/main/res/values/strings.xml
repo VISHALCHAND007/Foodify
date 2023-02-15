@@ -47,4 +47,5 @@
     <string name="success">Success</string>
     <string name="your_order_has_been_placed_successfully">Your order has been placed successfully.</string>
     <string name="ok">Ok</string>
+    <string name="no_orders_found">No Orders Found</string>
 </resources>
