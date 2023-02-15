@@ -8,6 +8,6 @@ class ApiUrl {
     val VERIFY_OTP = HOST_URL + "reset_password/fetch_result/"
     val FETCH_RESTAURANTS = HOST_URL + "restaurants/fetch_result/"
     val RESTAURANT_DETAILS = HOST_URL + "restaurants/fetch_result/"
-    val PLACE_ORDER = HOST_URL + "place_order_fetch_result/"
+    val PLACE_ORDER = HOST_URL + "place_order/fetch_result/"
     val ORDER_HISTORY = HOST_URL + "orders/fetch_result/"
 }

@@ -69,6 +69,7 @@ class MenuListAdapter(
 
             val intent = Intent(mContext, CartActivity::class.java)
             intent.putExtra("restaurantName", restaurantName)
+            intent.putExtra("restaurantId", menuItem.restaurantId)
             val args = Bundle()
             args.putSerializable("menuItems", orderList)
             intent.putExtra("bundle", args)

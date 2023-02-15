@@ -156,6 +156,7 @@ class SignInActivity : AppCompatActivity() {
         intent.putExtra("email", dataJSONObject.getString("email"))
         intent.putExtra("mobile", dataJSONObject.getString("mobile_number"))
         intent.putExtra("address", dataJSONObject.getString("address"))
+        intent.putExtra("userId", dataJSONObject.getString("user_id"))
         startActivity(intent)
     }
 }

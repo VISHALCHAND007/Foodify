@@ -8,5 +8,6 @@ data class Constants (
     val USER_PHOTO: String = "user_img",
     val DELIVERY_ADDRESS: String = "delivery_address",
     val SAVE_DATA: String = "save_data",
-    val DATABASE_NAME: String = "Shop.db"
+    val DATABASE_NAME: String = "Shop.db",
+    val USER_ID: String = "user_id"
 )

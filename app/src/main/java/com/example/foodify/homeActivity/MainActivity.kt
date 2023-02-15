@@ -97,6 +97,11 @@ class MainActivity : AppCompatActivity() {
                 deliveryAddress,
                 this@MainActivity
             )
+            SharedPreferencesHelper().setVariableInPreferences(
+                Constants().USER_ID,
+                intent.getStringExtra("userId").toString(),
+                this@MainActivity
+            )
             SharedPreferencesHelper().setBooleanInPreferences(
                 Constants().SAVE_DATA,
                 false,
