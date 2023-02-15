@@ -19,6 +19,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".searchPage.SearchActivity"
+            android:exported="false" />
+        <activity
             android:name=".cartPage.CartActivity"
             android:exported="false" />
         <activity
@@ -26,7 +29,7 @@
             android:exported="false" />
         <activity
             android:name=".homeActivity.MainActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".resetPasswod.ResetPasswordActivity"
             android:exported="false" />

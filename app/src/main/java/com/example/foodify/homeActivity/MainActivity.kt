@@ -239,6 +239,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun openHomeFragment() {
+        supportActionBar?.title = "All Restaurants"
         supportFragmentManager.beginTransaction()
             .replace(R.id.frameLayout, HomeFragment())
             .commit()

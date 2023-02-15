@@ -19,7 +19,7 @@ import com.example.foodify.restaurantMenu.RestaurantMenuActivity
 import java.util.ArrayList
 
 class RestaurantListAdapter(
-    private val mList: ArrayList<RestaurantListModel>?,
+    private var mList: ArrayList<RestaurantListModel>?,
     private val mContext: Context
 ) :
     RecyclerView.Adapter<RestaurantListAdapter.RestaurantViewHolder>() {
@@ -97,5 +97,10 @@ class RestaurantListAdapter(
 
     override fun getItemCount(): Int {
         return mList!!.size
+    }
+    @SuppressLint("NotifyDataSetChanged")
+    fun filterProducts(filteredList: ArrayList<RestaurantListModel>) {
+        mList = filteredList
+        notifyDataSetChanged()
     }
 }

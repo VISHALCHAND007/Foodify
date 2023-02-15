@@ -15,6 +15,7 @@
        app:cardElevation="0dp">
 
        <androidx.cardview.widget.CardView
+           android:id="@+id/searchCv"
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
            app:cardCornerRadius="15dp"
@@ -38,16 +39,16 @@
                    android:contentDescription="@null"
                    app:tint="@color/grey" />
 
-               <EditText
+               <TextView
                    android:layout_width="0dp"
                    android:layout_height="wrap_content"
                    android:hint="@string/search_restaurants"
                    android:textColor="@color/grey"
                    android:layout_marginStart="10dp"
                    android:background="@null"
+                   android:textSize="18sp"
                    android:layout_weight="1"
-                   android:autofillHints=""
-                   android:inputType="text" />
+                   android:autofillHints="" />
 
            </LinearLayout>
 
