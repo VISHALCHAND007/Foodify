@@ -1,7 +1,6 @@
 package com.example.foodify.fragments
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -48,7 +47,6 @@ class OrderHistoryFragment : Fragment() {
     private fun init(view: View) {
         initElements(view)
         getData()
-        initListeners()
     }
 
     private fun initElements(view: View) {
@@ -80,9 +78,8 @@ class OrderHistoryFragment : Fragment() {
                                 val itemArray = dataObj.getJSONArray("food_items")
                                 //creating item arraylist
                                 val list = java.util.ArrayList<MenuItemModel>()
-//                                list.
                                 for (j in 0 until itemArray.length()) {
-                                    val itemObj = itemArray.getJSONObject(i)
+                                    val itemObj = itemArray.getJSONObject(j)
                                     //creating each menuItem
                                     val menuItem = MenuItemModel(
                                         itemObj.getString("name"), //name
@@ -99,10 +96,8 @@ class OrderHistoryFragment : Fragment() {
                                 )
                                 orderHistoryList.add(item)
                             }
-                            Log.e("here==", orderHistoryList.size.toString())
                             setData()
                         } else {
-                            Log.e("here==", "aaya error")
                             showErrorToast("Some error occurred")
                         }
                     }
@@ -110,24 +105,19 @@ class OrderHistoryFragment : Fragment() {
             }
 
             override fun onError(volleyError: VolleyError) {
-                Log.e("here==", "aaya error")
                 showErrorToast(volleyError.message.toString())
             }
         })
     }
 
     private fun setData() {
-        if(orderHistoryList.isNotEmpty()) {
-            progressRl.visibility = View.GONE
+        progressRl.visibility = View.GONE
+        if (orderHistoryList.isNotEmpty()) {
             noOrdersFoundTv.visibility = View.GONE
             orderHistoryAdapter = OrderHistoryAdapter(requireContext(), orderHistoryList)
             orderHistoryRv.layoutManager = linearLayoutManager
             orderHistoryRv.adapter = orderHistoryAdapter
         }
-
-    }
-
-    private fun initListeners() {
 
     }
 

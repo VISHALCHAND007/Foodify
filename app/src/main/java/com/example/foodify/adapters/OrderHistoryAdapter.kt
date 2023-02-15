@@ -16,7 +16,6 @@ class OrderHistoryAdapter(
     private val mList: java.util.ArrayList<OrderHistoryModel>
 ) : RecyclerView.Adapter<OrderHistoryAdapter.OrderHistoryViewHolder>() {
 
-    private lateinit var menuList: ArrayList<MenuItemModel>
     private lateinit var linearLayoutManager: LinearLayoutManager
     private lateinit var menuItemAdapter: MenuItemAdapter
 
@@ -38,19 +37,10 @@ class OrderHistoryAdapter(
 
     override fun onBindViewHolder(holder: OrderHistoryViewHolder, position: Int) {
         holder.restaurantNameTv.text = mList[position].restaurantName
-        holder.orderedDateTv.text = mList[position].orderedDate
+        val date = mList[position].orderedDate.substring(0, 8)
+        holder.orderedDateTv.text = date.replace("-", "/", false)
         //creating the arraylist of menuItems
-        menuList = ArrayList()
         val menuItems = mList[position].listMenuItems
-
-//        for(i in 0 until menuItems.size) {
-//            val menuItem = MenuItemModel(
-//                menuItems[i].menuItemName,
-//                menuItems[i].menuItemId,
-//                menuItems[i].menuItemPrice
-//            )
-//            menuList.add(menuItem)
-//        }
 
         //calling the adapter to show these menu items
         setMenuItems(holder, menuItems)
@@ -58,11 +48,11 @@ class OrderHistoryAdapter(
 
     private fun setMenuItems(
         holder: OrderHistoryViewHolder,
-        menuItems: java.util.ArrayList<MenuItemModel>
+        menuItems: java.util.ArrayList<MenuItemModel>,
     ) {
         linearLayoutManager = LinearLayoutManager(mContext)
         menuItemAdapter = MenuItemAdapter(mContext, menuItems)
         holder.orderedItemsRv.layoutManager = linearLayoutManager
-        holder.orderedItemsRv.adapter
+        holder.orderedItemsRv.adapter = menuItemAdapter
     }
 }

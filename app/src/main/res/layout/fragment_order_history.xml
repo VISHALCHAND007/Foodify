@@ -10,7 +10,6 @@
 
     <RelativeLayout
         android:id="@+id/progressLayout"
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -40,7 +39,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="@string/no_orders_found"
-        android:visibility="gone"
         android:gravity="center"
         android:textStyle="bold"
         android:textSize="18sp"/>
