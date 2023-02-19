@@ -30,7 +30,7 @@ class VolleyRequest {
 
             }
         }, Response.ErrorListener {
-
+            listener.onError(it)
         }) {
             override fun getHeaders(): MutableMap<String, String> {
                 val header = HashMap<String, String>()
